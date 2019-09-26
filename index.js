@@ -24,7 +24,7 @@ var changeKeys = function changeKeys(transformer, obj, options) {
       var transformedValue;
 
       objValue = obj[objectKeys[index]];
-      transformedValue = changeKeys(transformer, objValue);
+      transformedValue = changeKeys(transformer, objValue, options);
       object[changedKey] = transformedValue;
       return object;
     }, {});
