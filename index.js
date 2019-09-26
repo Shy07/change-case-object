@@ -4,7 +4,7 @@ var paramCase = require('param-case');
 
 var changeKeys = function changeKeys(transformer, obj, options) {
   var objectKeys;
-  var ignoreArray = options.ignoreArray || false;
+  var ignoreArray = (options || {}).ignoreArray || false;
 
   if (Array.isArray(obj) && !ignoreArray) {
     return obj.map(function keysMap(key) {
@@ -34,7 +34,6 @@ var changeKeys = function changeKeys(transformer, obj, options) {
 
 var changeCaseObject = {};
 changeCaseObject.camel = changeCaseObject.camelCase = function camelCaseObject(obj, options) {
-  options = options || {};
   if (typeof obj === 'string') {
     return camelCase(obj);
   }
@@ -43,7 +42,6 @@ changeCaseObject.camel = changeCaseObject.camelCase = function camelCaseObject(o
 };
 
 changeCaseObject.snake = changeCaseObject.snakeCase = function snakeCaseObject(obj, options) {
-  options = options || {};
   if (typeof obj === 'string') {
     return snakeCase(obj);
   }
@@ -52,7 +50,6 @@ changeCaseObject.snake = changeCaseObject.snakeCase = function snakeCaseObject(o
 };
 
 changeCaseObject.param = changeCaseObject.paramCase = function paramCaseObject(obj, options) {
-  options = options || {};
   if (typeof obj === 'string') {
     return paramCase(obj);
   }
