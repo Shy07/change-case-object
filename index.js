@@ -2,10 +2,11 @@ var camelCase = require('camel-case');
 var snakeCase = require('snake-case');
 var paramCase = require('param-case');
 
-var changeKeys = function changeKeys(transformer, obj) {
+var changeKeys = function changeKeys(transformer, obj, options) {
   var objectKeys;
+  var ignoreArray = options.ignoreArray || false;
 
-  if (Array.isArray(obj)) {
+  if (Array.isArray(obj) && !ignoreArray) {
     return obj.map(function keysMap(key) {
       if (typeof key === 'string') {
         return transformer(key);
@@ -32,28 +33,31 @@ var changeKeys = function changeKeys(transformer, obj) {
 };
 
 var changeCaseObject = {};
-changeCaseObject.camel = changeCaseObject.camelCase = function camelCaseObject(obj) {
+changeCaseObject.camel = changeCaseObject.camelCase = function camelCaseObject(obj, options) {
+  options = options || {};
   if (typeof obj === 'string') {
     return camelCase(obj);
   }
 
-  return changeKeys(camelCase, obj);
+  return changeKeys(camelCase, obj, options);
 };
 
-changeCaseObject.snake = changeCaseObject.snakeCase = function snakeCaseObject(obj) {
+changeCaseObject.snake = changeCaseObject.snakeCase = function snakeCaseObject(obj, options) {
+  options = options || {};
   if (typeof obj === 'string') {
     return snakeCase(obj);
   }
 
-  return changeKeys(snakeCase, obj);
+  return changeKeys(snakeCase, obj, options);
 };
 
-changeCaseObject.param = changeCaseObject.paramCase = function paramCaseObject(obj) {
+changeCaseObject.param = changeCaseObject.paramCase = function paramCaseObject(obj, options) {
+  options = options || {};
   if (typeof obj === 'string') {
     return paramCase(obj);
   }
 
-  return changeKeys(paramCase, obj);
+  return changeKeys(paramCase, obj, options);
 };
 
 module.exports = changeCaseObject;
