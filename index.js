@@ -6,7 +6,8 @@ var changeKeys = function changeKeys(transformer, obj, options) {
   var objectKeys;
   var ignoreArray = (options || {}).ignoreArray || false;
 
-  if (Array.isArray(obj) && !ignoreArray) {
+  if (Array.isArray(obj)) {
+    if (ignoreArray) return obj;
     return obj.map(function keysMap(key) {
       if (typeof key === 'string') {
         return transformer(key);
